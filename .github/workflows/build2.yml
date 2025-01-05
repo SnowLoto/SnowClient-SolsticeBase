@@ -22,7 +22,7 @@ jobs:
     - name: Setup CMake
       uses: jwlawson/actions-setup-cmake@v3.28.6
       with:
-        cmake-version: 3.28  # 根据实际需求调整CMake版本
+        cmake-version: 3.28.6  # 根据实际需求调整CMake版本
 
     - name: Install Dependencies
       run: |
