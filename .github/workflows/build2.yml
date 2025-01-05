@@ -18,14 +18,14 @@ jobs:
       uses: jwlawson/actions-setup-cmake@v2.0.2
       with:
         cmake-version: 3.27
-    - name: Setup MSYS2
+    - name: Install MSYS2
       uses: msys2/setup-msys2@v2
-    - name: Install Dependencies
-      run: |
-        pacman -Syu --noconfirm
-        pacman -S mingw-w64-x86_64-binutils --noconfirm
-        pacman -S mingw-w64-x86_64-toolchain --noconfirm
-        pacman -S mingw-w64-x86_64-openmp --noconfirm
+      with:
+        update: true
+        install: |
+          mingw-w64-x86_64-binutils
+          mingw-w64-x86_64-toolchain
+          mingw-w64-x86_64-openmp
     - name: Configure CMake
       run: cmake -B build -DCMAKE_BUILD_TYPE=Release
     - name: Build
