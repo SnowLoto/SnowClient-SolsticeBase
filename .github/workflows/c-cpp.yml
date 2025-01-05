@@ -1,0 +1,30 @@
+name: Build SnowClient
+
+on:
+  push:
+    branches:
+      - master  # 触发分支
+
+jobs:
+  build:
+    runs-on: windows-latest  # WINDOWS环境
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install MSYS2
+      uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake
+
+    - name: Configure CMake
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: cmake --build build --config Release
+
+    - name: Test (if applicable)
+      run: ctest --test-dir build
+
