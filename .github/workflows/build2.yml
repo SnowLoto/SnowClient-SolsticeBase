@@ -17,7 +17,7 @@ jobs:
     - name: Setup CMake
       uses: jwlawson/actions-setup-cmake@v2.0.2
       with:
-        cmake-version: 3.27
+        cmake-version: 3.28
     - name: Install MSYS2
       uses: msys2/setup-msys2@v2
       with:
