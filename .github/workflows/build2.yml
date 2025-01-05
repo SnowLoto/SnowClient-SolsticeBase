@@ -1,0 +1,43 @@
+name: Build SnowClient DLL
+
+on:
+  push:
+    branches:
+      - main  # 根据实际情况修改触发分支，这里假设主分支为main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v1.6
+      with:
+        cmake-version: 3.28  # 根据实际需求调整CMake版本
+
+    - name: Install Dependencies
+      run: |
+        pacman -S mingw-w64-x86_64-binutils --noconfirm
+        pacman -S mingw-w64-x86_64-toolchain --noconfirm
+        pacman -S mingw-w64-x86_64-openmp --noconfirm
+
+    - name: Configure CMake
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release  # 根据实际需求调整构建类型，这里选择Release
+
+    - name: Build
+      run: cmake --build build --config Release
+
+    - name: Upload DLL
+      uses: actions/upload-artifact@v3
+      with:
+        name: SnowClient DLL
+        path: build/SnowClient.dll  # 根据实际生成的dll路径调整
