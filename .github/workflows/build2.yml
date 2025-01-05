@@ -14,30 +14,24 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-
+      uses: actions/checkout
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.0.2
-
+      uses: microsoft/setup-msbuild
     - name: Setup CMake
-      uses: jwlawson/actions-setup-cmake@v3.28.6
+      uses: jwlawson/actions-setup-cmake
       with:
-        cmake-version: 3.28.6  # 根据实际需求调整CMake版本
-
+        cmake-version: 3.28  # 根据实际需求调整CMake版本
     - name: Install Dependencies
       run: |
         pacman -S mingw-w64-x86_64-binutils --noconfirm
         pacman -S mingw-w64-x86_64-toolchain --noconfirm
         pacman -S mingw-w64-x86_64-openmp --noconfirm
-
     - name: Configure CMake
       run: cmake -B build -DCMAKE_BUILD_TYPE=Release  # 根据实际需求调整构建类型，这里选择Release
-
     - name: Build
       run: cmake --build build --config Release
-
     - name: Upload DLL
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact
       with:
         name: SnowClient DLL
         path: build/SnowClient.dll  # 根据实际生成的dll路径调整
